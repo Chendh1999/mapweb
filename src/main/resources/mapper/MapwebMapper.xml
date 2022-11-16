@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//http://mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.dao.MapDao" >
+    <resultMap id="pointModelResult" type="com.cc.model.PointModel">
+        <result property="gId" column="gid" jdbcType="BIGINT"/>
+        <result property="nameCh" column="name_ch" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="BASE_TABLE">
+        v6_time_cnty_pts_utf_wgs84
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        gid,name_ch
+    </sql>
+
+    <!--查询-->
+    <select id="getCntyPoint" resultMap="pointModelResult">
+        SELECT
+        <include refid="BASE_COLUMN"></include>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE gid=#{gId}
+    </select>
+
+    <!--插入-->
+    <insert id="insertCntyPoint" parameterType="com.cc.model.PointModel">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gId != null">
+                gid,
+            </if>
+            <if test="nameCh != null">
+                name_ch,
+            </if>
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            <if test="gId != null">
+                #{gId, jdbcType=BIGINT},
+            </if>
+            <if test="nameCh != null">
+                #{nameCh, jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--更新-->
+    <update id="updateCntyPoint" parameterType="com.cc.model.PointModel">
+        UPDATE
+        <include refid="BASE_TABLE"/>
+        SET
+        name_ch=#{nameCh}
+        WHERE
+        gid=#{gId}
+    </update>
+
+    <!--删除-->
+    <delete id="deleteCntyPoint" parameterType="com.cc.model.PointModel">
+        DELETE FROM
+        <include refid="BASE_TABLE"/>
+        WHERE
+        gid=#{gId}
+    </delete>
+</mapper>
+

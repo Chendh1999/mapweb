@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+ # 数据库配置
+spring:
+  main:
+    allow-circular-references: true
+  datasource:
+    initialize: flase
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 123456
+    # alibaba数据连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    # postgresql驱动
+    driver-class-name: org.postgresql.Driver
+    druid:
+      # 初始化连接大小
+      initial-size: 8
+      # 最小空闲连接数
+      min-idle: 5
+      # 最大连接数
+      max-active: 10
+      # 查询超时时间
+      query-timeout: 6000
+      # 事务查询超时时间
+      transaction-query-timeout: 6000
+      # 关闭空闲连接超时时间
+      remove-abandoned-timeout: 1800
+      filter: stat,config
+
+mybatis:
+  # sql映射文件
+  mapper-locations: classpath:mapper/*.xml
+  # 定义别名包
+  type-aliases-package: com.cc.model
+
+
+
+
